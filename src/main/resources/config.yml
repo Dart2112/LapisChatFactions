@@ -1,0 +1,9 @@
+# This will replace {FACTION} in the LapisChat format
+# If the player isn't in a faction it won't display like any other prefix
+# Colors are supported
+# Values: {ROLE_NAME} {ROLE_PREFIX} {FACTION_NAME}
+Format: "[{ROLE_PREFIX}{FACTION_NAME}]"
+# These are the prefixes for the channels
+Prefixes:
+  Factions: "[F]"
+  Allies: "[A]"

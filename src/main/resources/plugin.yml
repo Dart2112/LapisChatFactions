@@ -1,0 +1,5 @@
+name: Factions
+version: ${project.version}
+main: net.lapismc.lapischat.factions.Factions
+depend: [LapisChat, Factions]
+authors: [Dart2112]
