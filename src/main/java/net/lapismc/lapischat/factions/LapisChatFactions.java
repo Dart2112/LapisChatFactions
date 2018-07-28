@@ -25,6 +25,7 @@ public final class LapisChatFactions extends JavaPlugin implements Listener {
         channelManager.addChannel(new Factions(this));
         channelManager.addChannel(new Allies(this));
         Bukkit.getPluginManager().registerEvents(this, this);
+        getLogger().info(getName() + " v" + getDescription().getVersion() + " has been enabled");
     }
 
     @EventHandler

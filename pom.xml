@@ -3,7 +3,7 @@
 
     <groupId>net.lapismc.</groupId>
     <artifactId>lapischatfactions</artifactId>
-    <version>0.1.0</version>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
 
     <name>LapisChatFactions</name>
@@ -72,7 +72,7 @@
         <dependency>
             <groupId>net.lapismc</groupId>
             <artifactId>LapisChat</artifactId>
-            <version>0.1.0</version>
+            <version>1.0.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
