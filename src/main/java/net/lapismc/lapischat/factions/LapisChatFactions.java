@@ -2,8 +2,8 @@ package net.lapismc.lapischat.factions;
 
 import com.massivecraft.factions.entity.Faction;
 import com.massivecraft.factions.entity.MPlayer;
-import net.lapismc.lapischat.ChannelManager;
 import net.lapismc.lapischat.LapisChat;
+import net.lapismc.lapischat.api.ChannelAPI;
 import net.lapismc.lapischat.events.LapisChatEvent;
 import net.lapismc.lapischat.factions.channels.Allies;
 import net.lapismc.lapischat.factions.channels.Factions;
@@ -21,7 +21,7 @@ public final class LapisChatFactions extends JavaPlugin implements Listener {
     @Override
     public void onEnable() {
         saveDefaultConfig();
-        ChannelManager channelManager = LapisChat.getInstance().channelManager;
+        ChannelAPI channelManager = new ChannelAPI(this);
         channelManager.addChannel(new Factions(this));
         channelManager.addChannel(new Allies(this));
         Bukkit.getPluginManager().registerEvents(this, this);
@@ -48,9 +48,11 @@ public final class LapisChatFactions extends JavaPlugin implements Listener {
     public void getPlayerFromFaction(List<ChatPlayer> list, Faction f) {
         for (MPlayer players : f.getMPlayers()) {
             UUID uuid = players.getUuid();
-            ChatPlayer chatPlayer = LapisChat.getInstance().getPlayer(uuid);
-            if (chatPlayer.getOfflinePlayer().isOnline()) {
-                list.add(chatPlayer);
+            if (uuid != null) {
+                ChatPlayer chatPlayer = LapisChat.getInstance().getPlayer(uuid);
+                if (chatPlayer.getOfflinePlayer().isOnline()) {
+                    list.add(chatPlayer);
+                }
             }
         }
     }

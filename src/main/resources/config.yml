@@ -2,7 +2,7 @@
 # If the player isn't in a faction it won't display like any other prefix
 # Colors are supported
 # Values: {ROLE_NAME} {ROLE_PREFIX} {FACTION_NAME}
-Format: "[{ROLE_PREFIX}{FACTION_NAME}]"
+Format: " {ROLE_NAME} of {FACTION_NAME} "
 # These are the prefixes for the channels
 Prefixes:
   Factions: "[F]"
