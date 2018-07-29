@@ -4,6 +4,14 @@
 # Values: {ROLE_NAME} {ROLE_PREFIX} {FACTION_NAME}
 Format: " {ROLE_NAME} of {FACTION_NAME} "
 # These are the prefixes for the channels
-Prefixes:
-  Factions: "[F]"
-  Allies: "[A]"
+Channels:
+  Factions:
+    ShortName: "f"
+    Prefix: "[F]"
+    Permission: "LapisChat.Factions"
+    Format: "{CHANNEL_PREFIX} {FACTION} {PREFIX} {NAME} {SUFFIX} &7>&f {MESSAGE}"
+  Allies:
+    ShortName: "a"
+    Prefix: "[A]"
+    Permission: "LapisChat.Allies"
+    Format: "{CHANNEL_PREFIX} {FACTION} {PREFIX} {NAME} {SUFFIX} &7>&f {MESSAGE}"

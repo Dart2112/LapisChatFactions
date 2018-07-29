@@ -5,7 +5,6 @@ import com.massivecraft.factions.entity.MPlayer;
 import net.lapismc.lapischat.factions.LapisChatFactions;
 import net.lapismc.lapischat.framework.Channel;
 import net.lapismc.lapischat.framework.ChatPlayer;
-import org.bukkit.ChatColor;
 import org.bukkit.permissions.Permission;
 
 import java.util.ArrayList;
@@ -16,8 +15,8 @@ public class Allies extends Channel {
     private LapisChatFactions plugin;
 
     public Allies(LapisChatFactions plugin) {
-        super("Allies", "a", ChatColor.translateAlternateColorCodes('&',
-                plugin.getConfig().getString("Prefixes.Allies")), new Permission("LapisChat.Allies"));
+        super("Allies", plugin.getValue("Allies.ShortName"), plugin.getValue("Allies.Prefix"),
+                new Permission(plugin.getValue("Allies.Permission")), plugin.getValue("Allies.Format"));
         this.plugin = plugin;
     }
 

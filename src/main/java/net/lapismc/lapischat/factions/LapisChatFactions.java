@@ -38,6 +38,10 @@ public final class LapisChatFactions extends JavaPlugin implements Listener {
         }
     }
 
+    public String getValue(String key) {
+        return getConfig().getString("Channels." + key);
+    }
+
     private String getFormat(MPlayer player) {
         String format = getConfig().getString("Format");
         format = format.replace("{FACTION_NAME}", player.getFactionName());

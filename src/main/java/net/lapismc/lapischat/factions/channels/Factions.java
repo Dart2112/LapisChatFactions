@@ -5,7 +5,6 @@ import com.massivecraft.factions.entity.MPlayer;
 import net.lapismc.lapischat.factions.LapisChatFactions;
 import net.lapismc.lapischat.framework.Channel;
 import net.lapismc.lapischat.framework.ChatPlayer;
-import org.bukkit.ChatColor;
 import org.bukkit.permissions.Permission;
 
 import java.util.ArrayList;
@@ -16,8 +15,8 @@ public class Factions extends Channel {
     private LapisChatFactions plugin;
 
     public Factions(LapisChatFactions plugin) {
-        super("Factions", "f", ChatColor.translateAlternateColorCodes('&',
-                plugin.getConfig().getString("Prefixes.Factions")), new Permission("LapisChat.Factions"));
+        super("Factions", plugin.getValue("Factions.ShortName"), plugin.getValue("Factions.Prefix"),
+                new Permission(plugin.getValue("Factions.Permission")), plugin.getValue("Factions.Format"));
         this.plugin = plugin;
     }
 
