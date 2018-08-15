@@ -5,6 +5,7 @@ import com.massivecraft.factions.entity.MPlayer;
 import net.lapismc.lapischat.LapisChat;
 import net.lapismc.lapischat.api.ChannelAPI;
 import net.lapismc.lapischat.events.LapisChatEvent;
+import net.lapismc.lapischat.events.LapisMessageEvent;
 import net.lapismc.lapischat.factions.channels.Allies;
 import net.lapismc.lapischat.factions.channels.Factions;
 import net.lapismc.lapischat.framework.ChatPlayer;
@@ -17,6 +18,8 @@ import java.util.List;
 import java.util.UUID;
 
 public final class LapisChatFactions extends JavaPlugin implements Listener {
+
+    private UUID consoleUUID = UUID.nameUUIDFromBytes("Console".getBytes());
 
     @Override
     public void onEnable() {
@@ -35,6 +38,22 @@ public final class LapisChatFactions extends JavaPlugin implements Listener {
             e.applyFormat("{FACTION}", "");
         } else {
             e.applyFormat("{FACTION}", getFormat(player));
+        }
+    }
+
+    @EventHandler
+    public void lapisMessageEvent(LapisMessageEvent e) {
+        if (e.getSender().equals(consoleUUID)) {
+            e.applyFormat("{SENDER_FACTION}", "");
+        } else {
+            MPlayer sender = MPlayer.get(Bukkit.getPlayer(e.getSender()));
+            e.applyFormat("{SENDER_FACTION}", getFormat(sender));
+        }
+        if (e.getReceiver().equals(consoleUUID)) {
+            e.applyFormat("{RECEIVER_FACTION}", "");
+        } else {
+            MPlayer sender = MPlayer.get(Bukkit.getPlayer(e.getReceiver()));
+            e.applyFormat("{SENDER_FACTION}", getFormat(sender));
         }
     }
 
