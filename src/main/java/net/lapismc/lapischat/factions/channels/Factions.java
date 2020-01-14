@@ -7,8 +7,8 @@ import net.lapismc.lapischat.framework.Channel;
 import net.lapismc.lapischat.framework.ChatPlayer;
 import org.bukkit.permissions.Permission;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Factions extends Channel {
 
@@ -26,8 +26,8 @@ public class Factions extends Channel {
     }
 
     @Override
-    public List<ChatPlayer> getRecipients(ChatPlayer p) {
-        List<ChatPlayer> list = new ArrayList<>();
+    public Set<ChatPlayer> getRecipients(ChatPlayer p) {
+        Set<ChatPlayer> list = new HashSet<>();
         MPlayer player = MPlayer.get(p.getPlayer());
         if (player.getFaction().isNone()
                 || player.getFaction().equals(FactionColl.get().getSafezone())

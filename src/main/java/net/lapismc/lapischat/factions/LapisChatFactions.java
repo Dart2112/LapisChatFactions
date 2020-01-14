@@ -14,7 +14,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 public final class LapisChatFactions extends JavaPlugin implements Listener {
@@ -69,7 +69,7 @@ public final class LapisChatFactions extends JavaPlugin implements Listener {
         return format;
     }
 
-    public void getPlayerFromFaction(List<ChatPlayer> list, Faction f) {
+    public void getPlayerFromFaction(Set<ChatPlayer> list, Faction f) {
         for (MPlayer players : f.getMPlayers()) {
             UUID uuid = players.getUuid();
             if (uuid != null) {
