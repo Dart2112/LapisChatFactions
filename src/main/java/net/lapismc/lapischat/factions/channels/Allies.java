@@ -1,7 +1,10 @@
 package net.lapismc.lapischat.factions.channels;
 
-import com.massivecraft.factions.entity.FactionColl;
-import com.massivecraft.factions.entity.MPlayer;
+import com.massivecraft.factions.FPlayer;
+import com.massivecraft.factions.FPlayers;
+import com.massivecraft.factions.Faction;
+import com.massivecraft.factions.Factions;
+import com.massivecraft.factions.perms.Relation;
 import net.lapismc.lapischat.factions.LapisChatFactions;
 import net.lapismc.lapischat.framework.Channel;
 import net.lapismc.lapischat.framework.ChatPlayer;
@@ -28,15 +31,15 @@ public class Allies extends Channel {
     @Override
     public Set<ChatPlayer> getRecipients(ChatPlayer p) {
         Set<ChatPlayer> list = new HashSet<>();
-        MPlayer player = MPlayer.get(p.getPlayer());
-        if (player.getFaction().isNone()
-                || player.getFaction().equals(FactionColl.get().getSafezone())
-                || player.getFaction().equals(FactionColl.get().getWarzone())) {
+        FPlayer player = FPlayers.getInstance().getByPlayer(p.getPlayer());
+        if (player.getFaction().isWilderness()
+                || player.getFaction().isSafeZone()
+                || player.getFaction().isWarZone()) {
             return list;
         }
-        for (String s : player.getFaction().getRelationWishes().keySet()) {
-            if (player.getFaction().getRelationWish(s).isFriend()) {
-                plugin.getPlayerFromFaction(list, FactionColl.get().get(s));
+        for (Faction f : Factions.getInstance().getAllFactions()) {
+            if (f.getRelationWish(player.getFaction()).equals(Relation.ALLY)) {
+                plugin.getPlayerFromFaction(list, f);
             }
         }
         plugin.getPlayerFromFaction(list, player.getFaction());

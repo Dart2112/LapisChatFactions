@@ -1,7 +1,8 @@
 package net.lapismc.lapischat.factions;
 
-import com.massivecraft.factions.entity.Faction;
-import com.massivecraft.factions.entity.MPlayer;
+import com.massivecraft.factions.FPlayer;
+import com.massivecraft.factions.FPlayers;
+import com.massivecraft.factions.Faction;
 import net.lapismc.lapischat.LapisChat;
 import net.lapismc.lapischat.api.ChannelAPI;
 import net.lapismc.lapischat.events.LapisChatEvent;
@@ -10,6 +11,7 @@ import net.lapismc.lapischat.factions.channels.Allies;
 import net.lapismc.lapischat.factions.channels.Factions;
 import net.lapismc.lapischat.framework.ChatPlayer;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -33,8 +35,8 @@ public final class LapisChatFactions extends JavaPlugin implements Listener {
 
     @EventHandler
     public void lapisChatEvent(LapisChatEvent e) {
-        MPlayer player = MPlayer.get(e.getSender().getPlayer());
-        if (player.getFaction().isNone()) {
+        FPlayer player = FPlayers.getInstance().getByPlayer(e.getSender().getPlayer());
+        if (player.getFaction().isWilderness()) {
             e.applyFormat("{FACTION}", "");
         } else {
             e.applyFormat("{FACTION}", getFormat(player));
@@ -46,13 +48,13 @@ public final class LapisChatFactions extends JavaPlugin implements Listener {
         if (e.getSender().equals(consoleUUID)) {
             e.applyFormat("{SENDER_FACTION}", "");
         } else {
-            MPlayer sender = MPlayer.get(Bukkit.getPlayer(e.getSender()));
+            FPlayer sender = FPlayers.getInstance().getByPlayer(Bukkit.getPlayer(e.getSender()));
             e.applyFormat("{SENDER_FACTION}", getFormat(sender));
         }
         if (e.getReceiver().equals(consoleUUID)) {
             e.applyFormat("{RECEIVER_FACTION}", "");
         } else {
-            MPlayer sender = MPlayer.get(Bukkit.getPlayer(e.getReceiver()));
+            FPlayer sender = FPlayers.getInstance().getByPlayer(Bukkit.getPlayer(e.getReceiver()));
             e.applyFormat("{SENDER_FACTION}", getFormat(sender));
         }
     }
@@ -61,19 +63,25 @@ public final class LapisChatFactions extends JavaPlugin implements Listener {
         return getConfig().getString("Channels." + key);
     }
 
-    private String getFormat(MPlayer player) {
+    private String getFormat(FPlayer player) {
         String format = getConfig().getString("Format");
-        format = format.replace("{FACTION_NAME}", player.getFactionName());
-        format = format.replace("{ROLE_NAME}", player.getRole().getName());
+        format = format.replace("{FACTION_NAME}", player.getFaction().getTag());
+        format = format.replace("{ROLE_NAME}", player.getRole().nicename);
         format = format.replace("{ROLE_PREFIX}", player.getRole().getPrefix());
         return format;
     }
 
+    /**
+     * Adds all online chat players from this faction to the supplied list
+     *
+     * @param list The list the players should be added too
+     * @param f    The faction to check for online players
+     */
     public void getPlayerFromFaction(Set<ChatPlayer> list, Faction f) {
-        for (MPlayer players : f.getMPlayers()) {
-            UUID uuid = players.getUuid();
-            if (uuid != null) {
-                ChatPlayer chatPlayer = LapisChat.getInstance().getPlayer(uuid);
+        for (FPlayer players : f.getFPlayers()) {
+            Player p = players.getPlayer();
+            if (p != null) {
+                ChatPlayer chatPlayer = LapisChat.getInstance().getPlayer(p.getUniqueId());
                 if (chatPlayer.getOfflinePlayer().isOnline()) {
                     list.add(chatPlayer);
                 }
