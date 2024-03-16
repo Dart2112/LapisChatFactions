@@ -15,7 +15,7 @@ import java.util.Set;
 
 public class Allies extends Channel {
 
-    private LapisChatFactions plugin;
+    private final LapisChatFactions plugin;
 
     public Allies(LapisChatFactions plugin) {
         super("Allies", plugin.getValue("Allies.ShortName"), plugin.getValue("Allies.Prefix"),

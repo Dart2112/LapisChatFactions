@@ -21,7 +21,7 @@ import java.util.UUID;
 
 public final class LapisChatFactions extends JavaPlugin implements Listener {
 
-    private UUID consoleUUID = UUID.nameUUIDFromBytes("Console".getBytes());
+    private final UUID consoleUUID = UUID.nameUUIDFromBytes("Console".getBytes());
 
     @Override
     public void onEnable() {
@@ -64,7 +64,7 @@ public final class LapisChatFactions extends JavaPlugin implements Listener {
     }
 
     private String getFormat(FPlayer player) {
-        String format = getConfig().getString("Format");
+        String format = getConfig().getString("Format", " {ROLE_NAME} of {FACTION_NAME} ");
         format = format.replace("{FACTION_NAME}", player.getFaction().getTag());
         format = format.replace("{ROLE_NAME}", player.getRole().nicename);
         format = format.replace("{ROLE_PREFIX}", player.getRole().getPrefix());

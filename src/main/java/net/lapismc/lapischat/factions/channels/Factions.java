@@ -12,7 +12,7 @@ import java.util.Set;
 
 public class Factions extends Channel {
 
-    private LapisChatFactions plugin;
+    private final LapisChatFactions plugin;
 
     public Factions(LapisChatFactions plugin) {
         super("Factions", plugin.getValue("Factions.ShortName"), plugin.getValue("Factions.Prefix"),
