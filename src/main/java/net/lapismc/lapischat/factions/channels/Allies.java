@@ -1,10 +1,9 @@
 package net.lapismc.lapischat.factions.channels;
 
-import com.massivecraft.factions.FPlayer;
-import com.massivecraft.factions.FPlayers;
-import com.massivecraft.factions.Faction;
-import com.massivecraft.factions.Factions;
-import com.massivecraft.factions.perms.Relation;
+import dev.kitteh.factions.FPlayer;
+import dev.kitteh.factions.FPlayers;
+import dev.kitteh.factions.Faction;
+import dev.kitteh.factions.permissible.Relation;
 import net.lapismc.lapischat.factions.LapisChatFactions;
 import net.lapismc.lapischat.framework.Channel;
 import net.lapismc.lapischat.framework.ChatPlayer;
@@ -31,18 +30,18 @@ public class Allies extends Channel {
     @Override
     public Set<ChatPlayer> getRecipients(ChatPlayer p) {
         Set<ChatPlayer> list = new HashSet<>();
-        FPlayer player = FPlayers.getInstance().getByPlayer(p.getPlayer());
-        if (player.getFaction().isWilderness()
-                || player.getFaction().isSafeZone()
-                || player.getFaction().isWarZone()) {
+        FPlayer player = FPlayers.fPlayers().get(p.getPlayer());
+        if (player.faction().isWilderness()
+                || player.faction().isSafeZone()
+                || player.faction().isWarZone()) {
             return list;
         }
-        for (Faction f : Factions.getInstance().getAllFactions()) {
-            if (f.getRelationWish(player.getFaction()).equals(Relation.ALLY)) {
+        for (Faction f : dev.kitteh.factions.Factions.factions().all()) {
+            if (f.relationWish(player.faction()).equals(Relation.ALLY)) {
                 plugin.getPlayerFromFaction(list, f);
             }
         }
-        plugin.getPlayerFromFaction(list, player.getFaction());
+        plugin.getPlayerFromFaction(list, player.faction());
         return list;
     }
 }

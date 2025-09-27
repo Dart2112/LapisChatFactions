@@ -1,7 +1,7 @@
 package net.lapismc.lapischat.factions.channels;
 
-import com.massivecraft.factions.FPlayer;
-import com.massivecraft.factions.FPlayers;
+import dev.kitteh.factions.FPlayer;
+import dev.kitteh.factions.FPlayers;
 import net.lapismc.lapischat.factions.LapisChatFactions;
 import net.lapismc.lapischat.framework.Channel;
 import net.lapismc.lapischat.framework.ChatPlayer;
@@ -28,13 +28,13 @@ public class Factions extends Channel {
     @Override
     public Set<ChatPlayer> getRecipients(ChatPlayer p) {
         Set<ChatPlayer> list = new HashSet<>();
-        FPlayer player = FPlayers.getInstance().getByPlayer(p.getPlayer());
-        if (player.getFaction().isWilderness()
-                || player.getFaction().isSafeZone()
-                || player.getFaction().isWarZone()) {
+        FPlayer player = FPlayers.fPlayers().get(p.getPlayer());
+        if (player.faction().isWilderness()
+                || player.faction().isSafeZone()
+                || player.faction().isWarZone()) {
             return list;
         }
-        plugin.getPlayerFromFaction(list, player.getFaction());
+        plugin.getPlayerFromFaction(list, player.faction());
         return list;
     }
 }

@@ -1,8 +1,8 @@
 package net.lapismc.lapischat.factions;
 
-import com.massivecraft.factions.FPlayer;
-import com.massivecraft.factions.FPlayers;
-import com.massivecraft.factions.Faction;
+import dev.kitteh.factions.FPlayer;
+import dev.kitteh.factions.FPlayers;
+import dev.kitteh.factions.Faction;
 import net.lapismc.lapischat.LapisChat;
 import net.lapismc.lapischat.api.ChannelAPI;
 import net.lapismc.lapischat.events.LapisChatEvent;
@@ -35,8 +35,8 @@ public final class LapisChatFactions extends JavaPlugin implements Listener {
 
     @EventHandler
     public void lapisChatEvent(LapisChatEvent e) {
-        FPlayer player = FPlayers.getInstance().getByPlayer(e.getSender().getPlayer());
-        if (player.getFaction().isWilderness()) {
+        FPlayer player = FPlayers.fPlayers().get(e.getSender().getPlayer());
+        if (player.faction().isWilderness()) {
             e.applyFormat("{FACTION}", "");
         } else {
             e.applyFormat("{FACTION}", getFormat(player));
@@ -48,13 +48,13 @@ public final class LapisChatFactions extends JavaPlugin implements Listener {
         if (e.getSender().equals(consoleUUID)) {
             e.applyFormat("{SENDER_FACTION}", "");
         } else {
-            FPlayer sender = FPlayers.getInstance().getByPlayer(Bukkit.getPlayer(e.getSender()));
+            FPlayer sender = FPlayers.fPlayers().get(Bukkit.getPlayer(e.getSender()));
             e.applyFormat("{SENDER_FACTION}", getFormat(sender));
         }
         if (e.getReceiver().equals(consoleUUID)) {
             e.applyFormat("{RECEIVER_FACTION}", "");
         } else {
-            FPlayer sender = FPlayers.getInstance().getByPlayer(Bukkit.getPlayer(e.getReceiver()));
+            FPlayer sender = FPlayers.fPlayers().get(Bukkit.getPlayer(e.getReceiver()));
             e.applyFormat("{SENDER_FACTION}", getFormat(sender));
         }
     }
@@ -65,9 +65,9 @@ public final class LapisChatFactions extends JavaPlugin implements Listener {
 
     private String getFormat(FPlayer player) {
         String format = getConfig().getString("Format", " {ROLE_NAME} of {FACTION_NAME} ");
-        format = format.replace("{FACTION_NAME}", player.getFaction().getTag());
-        format = format.replace("{ROLE_NAME}", player.getRole().nicename);
-        format = format.replace("{ROLE_PREFIX}", player.getRole().getPrefix());
+        format = format.replace("{FACTION_NAME}", player.faction().tag());
+        format = format.replace("{ROLE_NAME}", player.role().nicename);
+        format = format.replace("{ROLE_PREFIX}", player.role().getPrefix());
         return format;
     }
 
@@ -78,8 +78,8 @@ public final class LapisChatFactions extends JavaPlugin implements Listener {
      * @param f    The faction to check for online players
      */
     public void getPlayerFromFaction(Set<ChatPlayer> list, Faction f) {
-        for (FPlayer players : f.getFPlayers()) {
-            Player p = players.getPlayer();
+        for (FPlayer players : f.members()) {
+            Player p = players.asPlayer();
             if (p != null) {
                 ChatPlayer chatPlayer = LapisChat.getInstance().getPlayer(p.getUniqueId());
                 if (chatPlayer.getOfflinePlayer().isOnline()) {
